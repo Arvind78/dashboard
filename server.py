@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify
 from bson import ObjectId  # Import ObjectId from bson module
-# from flask_cors import CORS
+from flask_cors import CORS
 import pymongo
 import bcrypt
 import jwt
 import datetime
 
 app = Flask(__name__)
-# CORS(app, origins="https://dashboard-8rzu.onrender.com")
+CORS(app, origins="*")
 
 try:
     client = pymongo.MongoClient("mongodb+srv://arvind_varma:arvind_varma@cluster0.vn12nqf.mongodb.net/test?retryWrites=true&w=majority")
