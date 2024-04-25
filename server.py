@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from bson import ObjectId  # Import ObjectId from bson module
+from bson import ObjectId  
 from flask_cors import CORS
 import pymongo
 import bcrypt
@@ -97,7 +97,7 @@ def get_visualization_data():
 #######################################
 #user login and signup opreation 
 
-@app.route('/api/user', methods=['POST'])
+@app.route('/api/signup', methods=['POST'])
 def create_user():
     data = request.json
     existing_user = user.find_one({"email": data["email"]})
