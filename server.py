@@ -73,20 +73,14 @@ def get_visualization_data():
     if not match_stage:
      match_stage = {"$match": {}}
     pipeline = [
-        match_stage,
+      match_stage,
         {
             "$group": {
                 "_id": {
-                    "added": "$added",
                     "country": "$country",
-                    "topic": "$topic",
-                    "region": "$region",
-                    "city": "$city"
+                    "intensity":{"$avg": "$intensity"},
                 },
-                "average_intensity": {"$avg": "$intensity"},
-                "average_likelihood": {"$avg": "$likelihood"},
-                "average_relevance": {"$avg": "$relevance"},
-                "count": {"$sum": 1}
+                
             }
         }
     ]
