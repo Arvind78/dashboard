@@ -42,11 +42,10 @@ def get_all_data():
 #Read opreation 
 @app.route('/api/chart', methods=['GET'])
 def get_visualization_data():
-    # Parse query parameters for filters
     filters = {}
     end_year = request.args.get('end_year')
     if end_year:
-        filters['end_year'] = int(end_year)  # Convert to integer
+        filters['end_year'] = int(end_year)
     
     topics = request.args.getlist('topics')
     if topics:
@@ -60,22 +59,21 @@ def get_visualization_data():
     if country:
         filters['country'] = country
     
-    source  = request.args.get('source ')
-    if source :
-        filters['source '] = source 
+    source = request.args.get('source')
+    if source:
+        filters['source'] = source
   
     sector = request.args.get('sector')
     if sector:
         filters['sector'] = sector
     
-      
-      
-    print("Filters:", filters)  # Print filters for debugging
+    print("Filters:", filters)
     
-    match_stage = {"$match": filters} if filters else {}  # Construct $match stage dynamically
-    
+    match_stage = {"$match": filters} if filters else {}
+    if not match_stage:
+     match_stage = {"$match": {}}
     pipeline = [
-        match_stage,  # Apply filters
+        match_stage,
         {
             "$group": {
                 "_id": {
@@ -94,6 +92,7 @@ def get_visualization_data():
     ]
     data = list(dashboard.aggregate(pipeline))
     return jsonify(data)
+
 #######################################
 #user login and signup opreation 
 
