@@ -76,16 +76,27 @@ def get_visualization_data():
       match_stage,
         {
             "$group": {
-                "_id": {
-                    "country": "$country",
-                    "intensity":{"$avg": "$intensity"},
-                },
+                "_id":"$country",
+                    "intensity":{"$sum": "$intensity"},
+
                 
             }
         }
     ]
-    data = list(dashboard.aggregate(pipeline))
-    return jsonify(data)
+    pipeline2 = [
+      match_stage,
+        {
+            "$group": {
+                "_id": "$topic",
+                     "relevance": {"$sum": "$relevance"},
+
+                
+            }
+        }
+    ]
+    columns_data = list(dashboard.aggregate(pipeline))
+    pie_data = list(dashboard.aggregate(pipeline2))
+    return jsonify (columns_data=columns_data, pie_data=pie_data)
 
 #######################################
 #user login and signup opreation 
